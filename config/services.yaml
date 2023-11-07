@@ -1,0 +1,22 @@
+parameters:
+    storage_dir: '%kernel.project_dir%/var/storage'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\Console\:
+        resource: '%kernel.project_dir%/src/Console'
+        tags: ['console.command']
+
+    App\Services\CarsImport\FileReader:
+        arguments:
+            $storageDir: '%storage_dir%'
+
+    App\Services\CarsImport\Car\CarFactory: ~
+
+    App\Services\CarsImport\CarsImporter: ~
+    App\Services\CarsImport\CarsImporterInterface: '@App\Services\CarsImport\CarsImporter'
+
